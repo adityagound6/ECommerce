@@ -126,7 +126,7 @@ namespace ECommerce.API.Controllers
                 result.isSucces = false;
                 result.Message = _message.ServerError.Error + ex.Message;
             }
-            return Ok();
+            return Ok(result);
         }
         [Route("Delete")]
         [HttpPost]
@@ -177,16 +177,24 @@ namespace ECommerce.API.Controllers
             try
             {
                 var category = await _category.GetById(id);
-                result.isSuccess = true;
-                result.Result = category;
-                result.Message = _message.ListData.SuccessList;
+                if (category != null)
+                {
+                    result.isSuccess = true;
+                    result.Result = category;
+                    result.Message = _message.ListData.SuccessList;
+                }
+                else
+                {
+                    result.isSuccess = false;
+                    result.Message = _message.Update.NotExit;
+                }
             }
             catch(Exception ex)
             {
                 result.isSuccess = false;
                 result.Message = _message.ServerError + ex.Message;
             }
-            return Ok();
+            return Ok(result);
         }
     }
 }
