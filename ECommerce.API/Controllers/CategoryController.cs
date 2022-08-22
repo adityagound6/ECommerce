@@ -69,7 +69,7 @@ namespace ECommerce.API.Controllers
         [Route("GetAll")]
         public async Task<IActionResult> AllCategory()
         {
-            GeneralResultList<Category> result = new GeneralResultList<Category>();
+            GeneralResultList<List<Category>> result = new GeneralResultList<List<Category>>();
             try
             {
                 var CategoryList = await _category.GetAll();
@@ -130,19 +130,63 @@ namespace ECommerce.API.Controllers
         }
         [Route("Delete")]
         [HttpPost]
-        public IActionResult Delete()
+        public async Task<IActionResult> Delete(DeleteCategory model)
+        {
+            GeneralResultAdd<Category> result = new GeneralResultAdd<Category>();
+            try
+            {
+                if (!ModelState.IsValid)
+                {
+                    var data = await _category.GetById(model.CategoryId);
+                    if(data == null)
+                    {
+                        result.isSucces = false;
+                        result.Message = _message.ApiName.Category + _message.Update.NotExit;
+                    }
+                    else
+                    {
+                        await _category.Delete(data);
+                    }
+                }
+                else
+                {
+                    result.isSucces = false;
+                    result.Message = _message.ApiName.Category + _message.Delete.NotDeleted;
+                    var error = ModelState.Values.SelectMany(v => v.Errors).ToList();
+                    foreach (var modelState in ModelState.Values)
+                    {
+                        foreach (var validation in modelState.Errors)
+                        {
+                            result.ValidationError.Add(validation.ErrorMessage);
+                        }
+                    }
+                }
+            }
+            catch(Exception ex)
+            {
+                result.isSucces = false;
+                result.Message = _message.ServerError.Error + ex.Message;
+            }
+            return Ok(result);
+        }
+        [Route("GetById")]
+        [HttpGet]
+        public async Task<IActionResult> GetById(int id)
         {
             GeneralResultList<Category> result = new GeneralResultList<Category>();
             try
             {
-
+                var category = await _category.GetById(id);
+                result.isSuccess = true;
+                result.Result = category;
+                result.Message = _message.ListData.SuccessList;
             }
             catch(Exception ex)
             {
                 result.isSuccess = false;
-                result.Message = _message.ServerError.Error + ex.Message;
+                result.Message = _message.ServerError + ex.Message;
             }
-            return Ok(result);
+            return Ok();
         }
     }
 }
