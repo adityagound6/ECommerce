@@ -4,6 +4,7 @@ using ECommerce.DAL.Model;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace ECommerce.DAL.Migrations
 {
     [DbContext(typeof(ECommerceContext))]
-    partial class ECommerceContextModelSnapshot : ModelSnapshot
+    [Migration("20220823050234_Adding role and ForeignKey")]
+    partial class AddingroleandForeignKey
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -80,7 +82,7 @@ namespace ECommerce.DAL.Migrations
                     b.Property<decimal>("Price")
                         .HasColumnType("decimal(18,2)");
 
-                    b.Property<int>("ProductId")
+                    b.Property<int>("ProductsProductId")
                         .HasColumnType("int");
 
                     b.Property<int>("Quantity")
@@ -93,6 +95,10 @@ namespace ECommerce.DAL.Migrations
                         .HasColumnType("datetime2");
 
                     b.HasKey("OrderId");
+
+                    b.HasIndex("CustomerId");
+
+                    b.HasIndex("ProductsProductId");
 
                     b.ToTable("Orders");
                 });
@@ -120,15 +126,44 @@ namespace ECommerce.DAL.Migrations
                     b.Property<string>("Image")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<decimal>("MainPrice")
-                        .HasColumnType("decimal(18,2)");
-
                     b.Property<string>("ProductName")
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("ProductId");
 
+                    b.HasIndex("CategoryId");
+
                     b.ToTable("Products");
+                });
+
+            modelBuilder.Entity("ECommerce.DAL.Model.Order", b =>
+                {
+                    b.HasOne("ECommerce.DAL.Model.Customer", "Customer")
+                        .WithMany()
+                        .HasForeignKey("CustomerId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("ECommerce.DAL.Model.Product", "Products")
+                        .WithMany()
+                        .HasForeignKey("ProductsProductId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Customer");
+
+                    b.Navigation("Products");
+                });
+
+            modelBuilder.Entity("ECommerce.DAL.Model.Product", b =>
+                {
+                    b.HasOne("ECommerce.DAL.Model.Category", "Category")
+                        .WithMany()
+                        .HasForeignKey("CategoryId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Category");
                 });
 #pragma warning restore 612, 618
         }

@@ -33,7 +33,7 @@ namespace ECommerce.API.Controllers
                     var category = _categoy.Any(x => x.CategoryId == model.CategoryId);
                     if (category)
                     {
-                        var product = _product.Any(x => x.ProductName.ToLower() == model.ProductName.ToLower() && x.Category.CategoryId == model.CategoryId);
+                        var product = _product.Any(x => x.ProductName.ToLower() == model.ProductName.ToLower() && x.CategoryId == model.CategoryId);
                         if (product)
                         {
                             result.isSucces = false;
@@ -41,7 +41,13 @@ namespace ECommerce.API.Controllers
                         }
                         else
                         {
-                            await _product.Add(model.ToCreateDbModel());
+                            model.MainPrice = model.ActualPrice;
+                            var mainPrice = (model.DiscountPrice / 100) * model.ActualPrice;
+                            if(mainPrice > 0)
+                            {
+                                model.ActualPrice = mainPrice;
+                            }
+                            var check = await _product.Add(model.ToCreateDbModel());
                             result.isSucces = true;
                             result.Message = _message.ApiName.Product + _message.Create.Success;
                         }
@@ -108,6 +114,122 @@ namespace ECommerce.API.Controllers
             {
                 result.Message = _message.ServerError.Error + ex.Message; 
                 result.isSuccess = false;
+            }
+            return Ok(result);
+        }
+        [HttpPost]
+        [Route("Update")]
+        public async Task<IActionResult> Update(UpdateProduct model)
+        {
+            GeneralResultAdd<Product> result = new GeneralResultAdd<Product>();
+            try
+            {
+                if (ModelState.IsValid)
+                {
+                    var product = await _product.GetById(model.ProductId);
+                    var category = _categoy.Any(x => x.CategoryId == model.CategoryId);
+                    if (category)
+                    {
+                        if (product != null)
+                        {
+                            var discount = (model.DiscountPrice / 100) * model.ActualPrice;
+                            if (discount > 0)
+                            {
+                                product.ActualPrice = discount;
+                            }
+                            product.DiscountPrice = model.DiscountPrice;
+                            product.CategoryId = model.CategoryId;
+                            product.Description = model.Description;
+                            product.Image = model.Image;
+                            product.ProductName = model.ProductName;
+                            await _product.Update(product);
+                            result.Message = _message.ApiName.Product + _message.Update.Updated;
+                            result.isSucces = true;
+                        }
+                        else
+                        {
+                            result.isSucces = false;
+                            result.Message = _message.ApiName.Product + _message.Update.NotExit;
+                        }
+                    }
+                    else
+                    {
+                        result.isSucces = false;
+                        result.Message = _message.ApiName.Category + _message.Update.NotExit;
+                    }
+                }
+                else
+                {
+                    result.isSucces = false;
+                    result.Message = _message.ApiName.Product + _message.Update.NotUpdated;
+                    foreach (var modelState in ModelState.Values)
+                    {
+                        foreach (var validation in modelState.Errors)
+                        {
+                            result.ValidationError.Add(validation.ErrorMessage);
+                        }
+                    }
+                }
+            }
+            catch(Exception ex)
+            {
+                result.Message = _message.ServerError.Error + ex.Message;
+                result.isSucces = false;
+            }
+            return Ok(result);
+        }
+        [Route("GetByCategoryId")]
+        [HttpGet]
+        public async Task<IActionResult> GetByCategoryId(int Categoryid)
+        {
+            GeneralResultList<List<Product>> result = new GeneralResultList<List<Product>>();
+            try
+            {
+                var isCategory = _categoy.Any(x => x.CategoryId == Categoryid);
+                if (isCategory)
+                {
+                    var product = (await _product.GetAll()).Where(x => x.CategoryId == Categoryid).ToList();
+                    result.isSuccess = true;
+                    result.Message = _message.ListData.SuccessList;
+                    result.Result = product;
+                }
+                else
+                {
+                    result.isSuccess=false;
+                    result.Message = _message.ApiName.Category + _message.Update.NotExit;
+                }
+            }
+            catch(Exception ex)
+            {
+                result.isSuccess = false;
+                result.Message=_message.ServerError.Error + ex.Message; 
+            }
+            return Ok(result);
+        }
+        [HttpPost]
+        [Route("Delete")]
+        public async Task<IActionResult> Delete(DeleteProduct model)
+        {
+            GeneralResultAdd<Product> result = new GeneralResultAdd<Product>();
+            try
+            {
+                var product = await _product.GetById(model.ProductId);
+                if(product != null)
+                {
+                    await _product.Delete(product);
+                    result.isSucces = true;
+                    result.Message = _message.ApiName.Product + _message.Delete.Deleted;
+                }
+                else
+                {
+                    result.isSucces = false;
+                    result.Message = _message.ApiName.Product + _message.Delete.NotDeleted;
+                }
+            }
+            catch(Exception ex)
+            {
+                result.isSucces = false;
+                result.Message = _message.ServerError.Error + ex.Message;
             }
             return Ok(result);
         }

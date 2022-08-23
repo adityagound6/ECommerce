@@ -15,8 +15,8 @@ namespace ECommerce.API.Model
                 Description = item.Description,
                 Image = item.Image,
                 DiscountPrice = item.DiscountPrice,
-                CategoryName = item.Category.CategoryName,
-                CategoryId = item.Category.CategoryId
+                CategoryId = item.CategoryId,
+                MainPrice = item.MainPrice
             };
         }
         [Required(ErrorMessage = "product name is required")]
@@ -25,9 +25,9 @@ namespace ECommerce.API.Model
         public string? Image { get; set; }
         [Required(ErrorMessage ="Category is required")]
         public int CategoryId { get; set; }
-        public string? CategoryName { get; set; }
         public decimal ActualPrice { get; set; }
         public decimal DiscountPrice { get; set; }
+        public decimal MainPrice { get; set; }
         public Product ToCreateDbModel()
         {
             return new Product
@@ -37,7 +37,8 @@ namespace ECommerce.API.Model
                 Image = Image,
                 ActualPrice = ActualPrice,
                 DiscountPrice = DiscountPrice,
-                Category = new Category { CategoryId = CategoryId,CategoryName = CategoryName}
+                CategoryId = CategoryId,
+                MainPrice = MainPrice
             };
         }
     }

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -11,8 +12,10 @@ namespace ECommerce.DAL.Model
     {
         [Key]
         public int OrderId { get; set; }
-        public Product Products { get; set; } = new Product();
-        public Customer Customer { get; set; } = new Customer();
+        [ForeignKey("Product")]
+        public int ProductId { get; set; }
+        [ForeignKey("Customer")]
+        public int CustomerId { get; set; }
         public int Quantity { get; set; }
         public decimal Price { get; set; }
         public string? Address { get; set; }
