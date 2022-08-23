@@ -4,6 +4,7 @@ using ECommerce.DAL.Model;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace ECommerce.DAL.Migrations
 {
     [DbContext(typeof(ECommerceContext))]
-    partial class ECommerceContextModelSnapshot : ModelSnapshot
+    [Migration("20220823073941_Adding displayName column in customer")]
+    partial class AddingdisplayNamecolumnincustomer
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -33,12 +35,6 @@ namespace ECommerce.DAL.Migrations
                     b.Property<string>("CategoryName")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<DateTime>("CreateDateTime")
-                        .HasColumnType("datetime2");
-
-                    b.Property<DateTime>("LastUpdateDatetime")
-                        .HasColumnType("datetime2");
-
                     b.HasKey("CategoryId");
 
                     b.ToTable("Categories");
@@ -52,9 +48,6 @@ namespace ECommerce.DAL.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("CustomerId"), 1L, 1);
 
-                    b.Property<DateTime>("CreateDateTime")
-                        .HasColumnType("datetime2");
-
                     b.Property<string>("CustomerFirstName")
                         .HasColumnType("nvarchar(max)");
 
@@ -66,9 +59,6 @@ namespace ECommerce.DAL.Migrations
 
                     b.Property<string>("Email")
                         .HasColumnType("nvarchar(max)");
-
-                    b.Property<DateTime>("LastUpdateDatetime")
-                        .HasColumnType("datetime2");
 
                     b.Property<string>("Password")
                         .HasColumnType("nvarchar(max)");
@@ -92,14 +82,8 @@ namespace ECommerce.DAL.Migrations
                     b.Property<string>("Address")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<DateTime>("CreateDateTime")
-                        .HasColumnType("datetime2");
-
                     b.Property<int>("CustomerId")
                         .HasColumnType("int");
-
-                    b.Property<DateTime>("LastUpdateDatetime")
-                        .HasColumnType("datetime2");
 
                     b.Property<decimal>("Price")
                         .HasColumnType("decimal(18,2)");
@@ -135,9 +119,6 @@ namespace ECommerce.DAL.Migrations
                     b.Property<int>("CategoryId")
                         .HasColumnType("int");
 
-                    b.Property<DateTime>("CreateDateTime")
-                        .HasColumnType("datetime2");
-
                     b.Property<string>("Description")
                         .HasColumnType("nvarchar(max)");
 
@@ -146,9 +127,6 @@ namespace ECommerce.DAL.Migrations
 
                     b.Property<string>("Image")
                         .HasColumnType("nvarchar(max)");
-
-                    b.Property<DateTime>("LastUpdateDatetime")
-                        .HasColumnType("datetime2");
 
                     b.Property<decimal>("MainPrice")
                         .HasColumnType("decimal(18,2)");

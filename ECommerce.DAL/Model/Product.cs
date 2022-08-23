@@ -15,5 +15,7 @@ namespace ECommerce.DAL.Model
         public decimal ActualPrice { get; set; } = 0;
         public decimal DiscountPrice { get; set; } = 0;
         public decimal MainPrice { get; set; } = 0;
+        public DateTime CreateDateTime { get; set; }
+        public DateTime LastUpdateDatetime { get; set; }
     }
 }

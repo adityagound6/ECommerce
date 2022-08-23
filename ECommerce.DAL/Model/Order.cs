@@ -21,5 +21,7 @@ namespace ECommerce.DAL.Model
         public string? Address { get; set; }
         public bool Status { get; set; }
         public DateTime date { get; set; }
+        public DateTime CreateDateTime { get; set; }
+        public DateTime LastUpdateDatetime { get; set; }
     }
 }

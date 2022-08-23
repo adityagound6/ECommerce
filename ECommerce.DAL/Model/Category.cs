@@ -12,5 +12,7 @@ namespace ECommerce.DAL.Model
         [Key]
         public int CategoryId { get; set; }
         public string? CategoryName { get; set; }
+        public DateTime CreateDateTime { get; set; }
+        public DateTime LastUpdateDatetime { get; set; }
     }
 }

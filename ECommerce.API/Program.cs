@@ -17,6 +17,7 @@ builder.Services.AddDbContext<ECommerceContext>
               (builder.Configuration.GetConnectionString("DefaultConnection")));
 builder.Services.AddScoped<ICategoryService, CategoryService>();
 builder.Services.AddScoped<IProductService, ProductService>();
+builder.Services.AddScoped<ICustomerService, CustomerService>();
 builder.Services.Configure<GeneralMessages>(
     builder.Configuration.GetSection(GeneralMessages.ConstString));
 var app = builder.Build();

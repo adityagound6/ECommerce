@@ -11,7 +11,7 @@ namespace ECommerce.API.Model
         public string? Image { get; set; }
         [Required(ErrorMessage = "Category is required")]
         public int CategoryId { get; set; }
-        public decimal ActualPrice { get; set; }
-        public decimal DiscountPrice { get; set; }
+        public decimal Price { get; set; }
+        public decimal DiscountPricePercentage { get; set; }
     }
 }

@@ -22,7 +22,7 @@ namespace ECommerce.API.Controllers
         }
         [HttpPost]
         [Route("AddCategory")]
-        public async Task<IActionResult> AddCategory(CategoryVm model)
+        public async Task<IActionResult> AddCategory(CreateCategory model)
         {
             GeneralResultAdd<CategoryVm> result = new GeneralResultAdd<CategoryVm>();
             try
@@ -39,7 +39,13 @@ namespace ECommerce.API.Controllers
                             return Ok(result);
                         }
                     }
-                    await _category.Add(model.ToCategoryDbModel());
+                    Category category = new Category()
+                    {
+                        CategoryName =model.CategoryName,
+                        CreateDateTime = DateTime.Now,
+                        LastUpdateDatetime =DateTime.Now
+                    };
+                    await _category.Add(category);
                     result.isSucces = true;
                     result.Message = _message.ApiName.Category + _message.Create.Success;
                 }

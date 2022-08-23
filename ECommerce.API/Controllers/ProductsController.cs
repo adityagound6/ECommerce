@@ -41,13 +41,19 @@ namespace ECommerce.API.Controllers
                         }
                         else
                         {
-                            model.MainPrice = model.ActualPrice;
-                            var mainPrice = (model.DiscountPrice / 100) * model.ActualPrice;
-                            if(mainPrice > 0)
+                            Product productToAdd = new Product()
                             {
-                                model.ActualPrice = mainPrice;
-                            }
-                            var check = await _product.Add(model.ToCreateDbModel());
+                                MainPrice = model.Price,
+                                Description = model.Description,
+                                Image = model.Image,
+                                ProductName = model.ProductName,
+                                CategoryId = model.CategoryId,
+                                ActualPrice = 0,
+                                DiscountPrice = 0,
+                                CreateDateTime = DateTime.Now,
+                                LastUpdateDatetime = DateTime.Now,
+                            };
+                            var check = await _product.Add(productToAdd);
                             result.isSucces = true;
                             result.Message = _message.ApiName.Product + _message.Create.Success;
                         }
@@ -132,16 +138,17 @@ namespace ECommerce.API.Controllers
                     {
                         if (product != null)
                         {
-                            var discount = (model.DiscountPrice / 100) * model.ActualPrice;
+                            var discount = (model.DiscountPricePercentage / 100) * model.Price;
                             if (discount > 0)
                             {
                                 product.ActualPrice = discount;
                             }
-                            product.DiscountPrice = model.DiscountPrice;
+                            product.DiscountPrice = model.DiscountPricePercentage;
                             product.CategoryId = model.CategoryId;
                             product.Description = model.Description;
                             product.Image = model.Image;
                             product.ProductName = model.ProductName;
+                            product.LastUpdateDatetime = DateTime.Now;
                             await _product.Update(product);
                             result.Message = _message.ApiName.Product + _message.Update.Updated;
                             result.isSucces = true;
