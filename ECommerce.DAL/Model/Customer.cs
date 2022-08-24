@@ -16,5 +16,6 @@ namespace ECommerce.DAL.Model
         public int Role { get; set; }
         public DateTime CreateDateTime { get; set; }
         public DateTime LastUpdateDatetime { get; set; }
+        public bool isActive { get; set; } = true;
     }
 }

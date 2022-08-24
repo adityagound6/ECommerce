@@ -1,9 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
+﻿
 using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+
 
 namespace ECommerce.DAL.Model
 {
@@ -14,5 +11,6 @@ namespace ECommerce.DAL.Model
         public string? CategoryName { get; set; }
         public DateTime CreateDateTime { get; set; }
         public DateTime LastUpdateDatetime { get; set; }
+        public bool isActive { get; set; } = true;
     }
 }

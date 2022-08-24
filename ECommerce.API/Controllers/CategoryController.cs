@@ -1,6 +1,6 @@
 ﻿using ECommerce.API.Helper;
 using ECommerce.Service.Interfaces;
-using ECommerce.Service.ModelVM;
+
 using Microsoft.AspNetCore.Mvc;
 using ECommerce.DAL.Model;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
@@ -24,7 +24,7 @@ namespace ECommerce.API.Controllers
         [Route("AddCategory")]
         public async Task<IActionResult> AddCategory(CreateCategory model)
         {
-            GeneralResultAdd<CategoryVm> result = new GeneralResultAdd<CategoryVm>();
+            GeneralResultAdd<Category> result = new GeneralResultAdd<Category>();
             try
             {
                 if (!ModelState.IsValid)

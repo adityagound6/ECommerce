@@ -17,11 +17,16 @@ namespace ECommerce.DAL.Model
         [ForeignKey("Customer")]
         public int CustomerId { get; set; }
         public int Quantity { get; set; }
+        public decimal TotalPrice { get; set; }
         public decimal Price { get; set; }
         public string? Address { get; set; }
         public bool Status { get; set; }
+        public string MobileNumber { get; set; }
+        public string OrderNumber { get; set; }
+        public string Pincode { get; set; }
         public DateTime date { get; set; }
         public DateTime CreateDateTime { get; set; }
         public DateTime LastUpdateDatetime { get; set; }
+        public bool isActive { get; set; } = true;
     }
 }

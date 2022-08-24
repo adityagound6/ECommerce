@@ -48,7 +48,7 @@ namespace ECommerce.API.Controllers
                                 Image = model.Image,
                                 ProductName = model.ProductName,
                                 CategoryId = model.CategoryId,
-                                ActualPrice = 0,
+                                ActualPrice = model.Price,
                                 DiscountPrice = 0,
                                 CreateDateTime = DateTime.Now,
                                 LastUpdateDatetime = DateTime.Now,

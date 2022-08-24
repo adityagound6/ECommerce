@@ -17,5 +17,6 @@ namespace ECommerce.DAL.Model
         public decimal MainPrice { get; set; } = 0;
         public DateTime CreateDateTime { get; set; }
         public DateTime LastUpdateDatetime { get; set; }
+        public bool isActive { get; set; } = true;
     }
 }
