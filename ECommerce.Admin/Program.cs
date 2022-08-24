@@ -1,8 +1,11 @@
+using ECommerce.Core.Helper;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
-
+builder.Services.Configure<PathOptions>(
+    builder.Configuration.GetSection(PathOptions.Path));
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
