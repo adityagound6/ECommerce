@@ -10,11 +10,11 @@ namespace ECommerce.Core.Helper
     {
         public const string Path = "Path";
         public string WebBaseUrl { get; set; }
-        public Category MyProperty { get; set; }
-        public Product Product { get; set; }
-        public Order Order { get; set; }
+        public CategoryPath MyProperty { get; set; }
+        public ProductPath Product { get; set; }
+        public OrderPath Order { get; set; }
     }
-    public class Category
+    public class CategoryPath
     {
         public string GetAll { get; set; }
         public string GetById { get; set; }
@@ -22,7 +22,7 @@ namespace ECommerce.Core.Helper
         public string Delete { get; set; }
         public string Update { get; set; }
     }
-    public class Product
+    public class ProductPath
     {
         public string GetAll { get; set; }
         public string GetById { get; set; }
@@ -31,7 +31,7 @@ namespace ECommerce.Core.Helper
         public string Update { get; set; }
         public string GetByCategoryId { get; set; }
     }
-    public class Order
+    public class OrderPath
     {
         public string GetAll { get; set; }
         public string GetById { get; set; }

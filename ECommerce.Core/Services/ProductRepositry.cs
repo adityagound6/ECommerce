@@ -1,16 +1,20 @@
-﻿using ECommerce.Core.Interface;
+﻿using ECommerce.Core.Helper;
+using ECommerce.Core.Interface;
 using ECommerce.Core.Model;
+using Microsoft.Extensions.Options;
 
 namespace ECommerce.Core.Services
 {
     public class ProductRepositry : IProductReppository
     {
-        private readonly string baseApiUrl;
-        public ProductRepositry(string baseApiUrl)
+        private readonly PathOptions _path;
+        private readonly string _baseApiUrl;
+        public ProductRepositry(string baseApiUrl, IOptions<PathOptions> path)
         {
-            this.baseApiUrl = baseApiUrl;
+            _path = path.Value;
+            _baseApiUrl = baseApiUrl;
         }
-        public Task<Product> GetAllProduct()
+        public async Task<Product> GetAllProduct()
         {
             throw new NotImplementedException();
         }
