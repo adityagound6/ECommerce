@@ -22,12 +22,12 @@ namespace ECommerce.API.Controllers
         }
         [HttpPost]
         [Route("AddCategory")]
-        public async Task<IActionResult> AddCategory(CreateCategory model)
+        public async Task<IActionResult> Create(CreateCategory model)
         {
             GeneralResultAdd<Category> result = new GeneralResultAdd<Category>();
             try
             {
-                if (!ModelState.IsValid)
+                if (ModelState.IsValid)
                 {
                     var list = await _category.GetAll();
                     foreach(var categoryL in list)
@@ -73,7 +73,7 @@ namespace ECommerce.API.Controllers
         }
         [HttpGet]
         [Route("GetAll")]
-        public async Task<IActionResult> AllCategory()
+        public async Task<IActionResult> GetAll()
         {
             GeneralResultList<List<Category>> result = new GeneralResultList<List<Category>>();
             try
@@ -92,7 +92,7 @@ namespace ECommerce.API.Controllers
         }
         [HttpPost]
         [Route("Update")]
-        public async Task<IActionResult> UpdateCategory(UpdateCategory model)
+        public async Task<IActionResult> Update(UpdateCategory model)
         {
             GeneralResultAdd<Category> result = new GeneralResultAdd<Category>();
             try
