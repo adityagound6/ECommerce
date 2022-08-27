@@ -1,11 +1,15 @@
 using ECommerce.Core.Helper;
+using ECommerce.Core.Interface;
+using ECommerce.Core.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
+builder.Services.AddScoped<IProductReppository, ProductRepositry>();
 builder.Services.Configure<PathOptions>(
     builder.Configuration.GetSection(PathOptions.Path));
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.

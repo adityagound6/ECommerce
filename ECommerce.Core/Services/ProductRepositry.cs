@@ -8,15 +8,19 @@ namespace ECommerce.Core.Services
     public class ProductRepositry : IProductReppository
     {
         private readonly PathOptions _path;
-        private readonly string _baseApiUrl;
-        public ProductRepositry(string baseApiUrl, IOptions<PathOptions> path)
+        public ProductRepositry(IOptions<PathOptions> path)
         {
             _path = path.Value;
-            _baseApiUrl = baseApiUrl;
         }
-        public async Task<Product> GetAllProduct()
+        public async Task<List<Product>> GetAllProduct()
         {
-            throw new NotImplementedException();
+            GeneralResultList<List<Product>> data = await ApiCall<List<Product>>.CallFunction(_path.WebBaseUrl + _path.Product.GetAll);
+            if (data.isSuccess == true)
+            {
+                var product = data.Result;
+                return product;
+            }
+            return null;
         }
     }
 }

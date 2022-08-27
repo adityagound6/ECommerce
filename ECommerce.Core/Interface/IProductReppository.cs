@@ -9,6 +9,6 @@ namespace ECommerce.Core.Interface
 {
     public interface IProductReppository
     {
-        Task<Product> GetAllProduct();
+        Task<List<Product>> GetAllProduct();
     }
 }

@@ -27,7 +27,7 @@ namespace ECommerce.API.Controllers
             GeneralResultAdd<Category> result = new GeneralResultAdd<Category>();
             try
             {
-                if (!ModelState.IsValid)
+                if (ModelState.IsValid)
                 {
                     var list = await _category.GetAll();
                     foreach(var categoryL in list)

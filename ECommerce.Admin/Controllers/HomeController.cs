@@ -1,4 +1,5 @@
 ﻿using ECommerce.Admin.Models;
+using ECommerce.Core.Interface;
 using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
 
@@ -6,12 +7,15 @@ namespace ECommerce.Admin.Controllers
 {
     public class HomeController : Controller
     {
-        public HomeController()
+        private readonly IProductReppository _product;
+        public HomeController(IProductReppository product)
         {
+            _product = product;
         }
 
-        public IActionResult Index()
+        public async Task<IActionResult> Index()
         {
+            await _product.GetAllProduct();
             return View();
         }
 
