@@ -16,6 +16,8 @@ namespace ECommerce.Core.Services
         }
         public async Task<Product> GetAllProduct()
         {
+            APICallback<GeneralResultApi<Product>> data = new APICallback<GeneralResultApi<Product>>();
+           
             throw new NotImplementedException();
         }
     }
